@@ -3,16 +3,7 @@ export interface DashboardStats {
   data: {
     totalAttendees: number;
     totalTokens: number;
-    totalSessions: number;
-    registrationsByMonth: Array<{
-      month: string;
-      count: number;
-    }>;
-    attendeesByCategory: Array<{
-      category: string;
-      value: number;
-      color?: string;
-    }>;
+    topPuzzleSolvers: { name: string }[];	
   };
   // Adicione outras propriedades conforme necessário
 }

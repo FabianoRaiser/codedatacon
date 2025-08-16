@@ -1,22 +1,22 @@
 // Definindo o tipo de dados das estatísticas do dashboard
 export interface DashboardStats {
-  data: {
     totalAttendees: number;
     totalTokens: number;
     topPuzzleSolvers: { name: string }[];	
-  };
   // Adicione outras propriedades conforme necessário
 }
 
 // Função para buscar as estatísticas do dashboard
 export const getDashboardStats = async (): Promise<DashboardStats> => {
   try {
-    const response = await fetch("http://localhost:3001/api/dashboard-stats", {
+    const response = await fetch("http://localhost:3001/api/dashboard/stats", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    console.log(response);
 
     // Verificar se a resposta foi bem-sucedida
     if (!response.ok) {
@@ -24,7 +24,7 @@ export const getDashboardStats = async (): Promise<DashboardStats> => {
     }
 
     // Converter a resposta para JSON
-    const data: DashboardStats = await response.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Erro ao buscar estatísticas do dashboard:", error);
@@ -35,7 +35,7 @@ export const getDashboardStats = async (): Promise<DashboardStats> => {
 // Função alternativa com tratamento de erro mais específico
 export const fetchDashboardStats = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/dashboard-stats");
+    const response = await fetch("http://localhost:3001/api/dashboard/stats");
 
     if (!response.ok) {
       throw new Error(`Falha na requisição: ${response.status}`);

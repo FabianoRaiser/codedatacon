@@ -18,7 +18,7 @@ const Relatorio = () => {
     fetchDashboardStats().then(setDashboardStats);
   }, []);
 
-  console.log(dashboardStats?.data || 'Não há dados');
+  console.log(dashboardStats || 'Não há dados');
 
   return (
     <Container>
@@ -28,24 +28,24 @@ const Relatorio = () => {
           <>
             <Grid.Col span={4}>
               <IndicadorTexto label="Total de participantes">
-                {dashboardStats.data.totalAttendees}
+                {dashboardStats.totalAttendees}
               </IndicadorTexto>
             </Grid.Col>
             <Grid.Col span={4}>
               <IndicadorTexto label="Total de Tokens">
-                {dashboardStats.data.totalTokens}
-              </IndicadorTexto>
+                {dashboardStats.totalTokens}
+              </IndicadorTexto >
             </Grid.Col>
             <Grid.Col span={4}>
               <IndicadorTexto label="Total de sessões">
-                {dashboardStats.data.totalAttendees}
+                {dashboardStats.totalAttendees}
               </IndicadorTexto>
             </Grid.Col>
             <Grid.Col span={4}>
               <Flex direction="column" gap={10}>
                 <ListaDados
                   label="Top 10 Resolvedores de Puzzel"
-                  data={dashboardStats.data.topPuzzleSolvers}
+                  data={dashboardStats.topPuzzleSolvers}
                 />
                 <GraficoDonut />
               </Flex>

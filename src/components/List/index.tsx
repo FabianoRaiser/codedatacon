@@ -1,5 +1,4 @@
 // src/components/ListaDados.tsx
-import React from "react";
 import { List, Title } from "@mantine/core";
 import { CustomCard } from "../Card";
 const ListaDados = ({label, data}: {label: string, data: { name: string}[]}) => {

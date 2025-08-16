@@ -3,19 +3,22 @@ import ListaDados from "../components/List";
 import GraficoDonut from "../components/graphs/Donut";
 import GraficoBarra from "../components/graphs/Bar";
 import { Container, Flex, Grid, Title } from "@mantine/core";
-import { GraficoLinhas } from "../components/Lines";
+// import { GraficoLinhas } from "../components/Lines";
 import { IndicadorTexto } from "../components/Text";
 import {
   fetchDashboardStats,
   type DashboardStats,
 } from "../api/getDashboardStats";
 import { useEffect, useState } from "react";
+import { getTopTokens } from "../api/getTopTokens";
 
 const Relatorio = () => {
   const [dashboardStats, setDashboardStats] = useState<DashboardStats>();
+  const [topTokens, setTopTokens] = useState([]);
 
   useEffect(() => {
     fetchDashboardStats().then(setDashboardStats);
+    getTopTokens().then(setTopTokens);
   }, []);
 
   console.log(dashboardStats || 'Não há dados');
@@ -52,15 +55,17 @@ const Relatorio = () => {
             </Grid.Col>
             <Grid.Col span={4}>
               <Flex direction="column" gap={10}>
-                {/* <ListaDados /> */}
-                <GraficoDonut />
+              <ListaDados
+                  label="Top 10 Tokens Resgatados"
+                  data={topTokens.map((token: { code: string, claimCount: number }) => ({ name: `${token.code} - ${token.claimCount}` }))}
+                />
               </Flex>
             </Grid.Col>
             <Grid.Col span={4}>
               <GraficoBarra />
             </Grid.Col>
             <Grid.Col span={12}>
-              <GraficoLinhas />
+              {/* <GraficoLinhas data={dashboardStats} label="Registros por mês" /> */}
             </Grid.Col>
           </>
         )}

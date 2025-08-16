@@ -2,7 +2,7 @@
 import ListaDados from "../components/List";
 import GraficoDonut from "../components/graphs/Donut";
 import GraficoBarra from "../components/graphs/Bar";
-import { Container, Flex, Grid, Title } from "@mantine/core";
+import { Container, Grid, Title } from "@mantine/core";
 // import { GraficoLinhas } from "../components/Lines";
 import { IndicadorTexto } from "../components/Text";
 import {
@@ -45,21 +45,22 @@ const Relatorio = () => {
               </IndicadorTexto>
             </Grid.Col>
             <Grid.Col span={4}>
-              <Flex direction="column" gap={10}>
                 <ListaDados
                   label="Top 10 Resolvedores de Puzzel"
                   data={dashboardStats.topPuzzleSolvers}
                 />
-                <GraficoDonut />
-              </Flex>
             </Grid.Col>
             <Grid.Col span={4}>
-              <Flex direction="column" gap={10}>
+                <ListaDados
+                  label="Top 10 Resgatadores de Tokens"
+                  data={dashboardStats.topPuzzleSolvers}
+                />
+            </Grid.Col>
+            <Grid.Col span={4}>
               <ListaDados
                   label="Top 10 Tokens Resgatados"
                   data={topTokens.map((token: { code: string, claimCount: number }) => ({ name: `${token.code} - ${token.claimCount}` }))}
                 />
-              </Flex>
             </Grid.Col>
             <Grid.Col span={4}>
               <GraficoBarra />

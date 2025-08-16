@@ -1,7 +1,7 @@
 // src/components/GraficoDonut.tsx
 import React, { useEffect, useState } from 'react';
 import { DonutChart } from '@mantine/charts';
-import { Title, Select, LoadingOverlay, Text, Group, Badge } from '@mantine/core';
+import { Title, Select, LoadingOverlay, Text, Group, Badge, Box } from '@mantine/core';
 import { CustomCard } from '../../Card';
 import { 
   getGenderDonutData, 
@@ -72,15 +72,32 @@ const GraficoDonut: React.FC<GraficoDonutProps> = ({
   const totalValue = data.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <CustomCard>
-      <Group justify="space-between" mb="md">
-        <Title order={3}>{title}</Title>
+    <CustomCard color="cyan">
+      <Group justify="space-between" mb="lg">
+        <Title 
+          order={3}
+          style={{
+            background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
+        >
+          {title}
+        </Title>
         <Select
           value={selectedType}
-          onChange={(value) => setSelectedType(value as any)}
+          onChange={(value) => setSelectedType(value as 'gender' | 'segment' | 'level' | 'state')}
           data={chartTypes}
           size="sm"
           w={200}
+          styles={{
+            input: {
+              background: 'rgba(255,255,255,0.9)',
+              border: '1px solid rgba(255,255,255,0.3)',
+              borderRadius: '12px',
+            }
+          }}
         />
       </Group>
       
@@ -90,36 +107,73 @@ const GraficoDonut: React.FC<GraficoDonutProps> = ({
         </Text>
       )}
 
-      <div style={{ position: 'relative', minHeight: 300 }}>
+      <Box style={{ position: 'relative', minHeight: 350 }}>
         <LoadingOverlay visible={loading} />
         
         {!loading && data.length > 0 && (
           <>
-            <DonutChart
-              data={data}
-              size={200}
-              thickness={20}
-              paddingAngle={2}
-              strokeWidth={1}
-              withLabels
-              withTooltip
-              tooltipDataSource="segment"
-            />
+            <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <DonutChart
+                data={data}
+                size={250}
+                thickness={25}
+                paddingAngle={3}
+                strokeWidth={2}
+                withLabels
+                withTooltip
+                tooltipDataSource="segment"
+                styles={{
+                  root: {
+                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
+                  }
+                }}
+              />
+            </Box>
             
-            <Group mt="md" gap="xs" wrap="wrap">
-              {data.map((item, index) => (
-                <Badge 
-                  key={index}
-                  variant="dot"
-                  color={item.color.replace('.6', '').replace('.3', '').replace('.5', '').replace('.7', '').replace('.9', '')}
-                  size="sm"
-                >
-                  {item.name}: {item.value} ({((item.value / totalValue) * 100).toFixed(1)}%)
-                </Badge>
-              ))}
-            </Group>
+            <Box 
+              style={{
+                background: 'rgba(255,255,255,0.1)',
+                borderRadius: '16px',
+                padding: '1rem',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <Group gap="xs" wrap="wrap" justify="center">
+                {data.map((item, index) => (
+                  <Badge 
+                    key={index}
+                    variant="gradient"
+                    gradient={{ 
+                      from: item.color.replace('.6', '').replace('.3', '').replace('.5', '').replace('.7', '').replace('.9', ''), 
+                      to: item.color.replace('.6', '').replace('.3', '').replace('.5', '').replace('.7', '').replace('.9', ''),
+                      deg: 45 
+                    }}
+                    size="md"
+                    style={{
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      fontSize: '0.85rem',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {item.name}: {item.value} ({((item.value / totalValue) * 100).toFixed(1)}%)
+                  </Badge>
+                ))}
+              </Group>
+            </Box>
             
-            <Text size="sm" c="dimmed" mt="sm">
+            <Text 
+              size="sm" 
+              c="dimmed" 
+              ta="center" 
+              mt="md"
+              style={{
+                background: 'rgba(255,255,255,0.8)',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                fontWeight: 600,
+              }}
+            >
               Total: {totalValue} participantes
             </Text>
           </>
@@ -130,7 +184,7 @@ const GraficoDonut: React.FC<GraficoDonutProps> = ({
             Nenhum dado disponível para exibição
           </Text>
         )}
-      </div>
+      </Box>
     </CustomCard>
   );
 };

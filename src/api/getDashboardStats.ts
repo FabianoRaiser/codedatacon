@@ -2,6 +2,8 @@
 export interface DashboardStats {
     totalAttendees: number;
     totalTokens: number;
+    totalEvents: number;
+    totalPuzzles: number;
     topPuzzleSolvers: { name: string }[];	
   // Adicione outras propriedades conforme necessário
 }
